@@ -42,7 +42,7 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
-// Update Product -- only Admin route (keval isko admin he ker sakta h)
+// Update Product -- only Admin route 
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     let product = await Product.findById(req.params.id);
 
@@ -119,69 +119,49 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
-// Get All Reviews of a product ( is function ke help se hm kise bhi ek product ke sare reviews dekh sakte h )
+// Get All Reviews of a product 
 exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.query.id);
-    // basically hm findById deke hm us product ko dhund legay
 
-    // uske bad yadi product nahi milta h to hm de degay ek condition 
     if (!product) {
-        return next(new ErrorHander("Product not found", 404)); // isme yaha message show ker dega yadi product nahi mila to 
+        return next(new ErrorHander("Product not found", 404)); 
     }
 
-    // or reponse me yaha mil jayega hame
     res.status(200).json({
         success: true,
-        reviews: product.reviews, // or review me yah dal degay
+        reviews: product.reviews, 
     });
 });
-// so hm ne yaha bana leye product ke sare review lene ka 
-// or iske sath hm bana legay delete kerne ka 
-// or hm getProductReviews function ka route set ker degay productRoute me
 
-// Delete Review ( or hm deleteRReview function ke help se review delete ker sakte h )
+// Delete Review 
 exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.query.productId);
-    // basically hm findById deke hm us product ko dhund legay
 
-    // uske bad yadi product nahi milta h to hm de degay ek condition 
     if (!product) {
         return next(new ErrorHander("Product not found", 404));
     }
-
-    // is varaible se hm kea karegay ke, jo review hame chaheye usko hm rakh legay, or jo nahi chaheye vaha nahi rakhe gay
-    // to iske liye hamre passs do method h ke :- 
-    // 1. jo hame nahi chaheye usko delete ker de.
-    // 2. or jo hame review chaheye vo rakhe
-    // dekhte h hm iske liye kea kerte h  
-    const reviews = product.reviews.filter( // filter method ke help se vo review rakhegay jo hame chaheye
+ 
+    const reviews = product.reviews.filter( 
         (rev) => rev._id.toString() !== req.query.id.toString() 
     ); 
-    // jo review delete kerna h vo ( !== req.query.id.toString() ) esse ho jayegye, delete hone ke bad jo bache huve h 
-    // mltb jo hame rakhne h usse hm review me save kerva degay
-
-    // or delete hone ke bad jo review rahegay unka average rating ke liye yaha use keya h hm ne 
-    let avg = 0; // isse review ka average rating nikal jayega
-
-    // or isme jine review user dalta rahega vaha add hote rahegay
+    
+    let avg = 0; 
+    
     reviews.forEach((rev) => {
         avg += rev.rating;
     });
 
-    let ratings = 0; //starting me review zero show karega
-
-    // yadi reviews ke length 0 rahegye to ratings zero show ker dega
+    let ratings = 0;
+    
     if (reviews.length === 0) {
         ratings = 0;
     }
-    // or yadi kuch review rahegay to hm, rating ko average me dekha degay 
     else {
         ratings = avg / reviews.length;
     }
 
-    const numOfReviews = reviews.length; // or kitne review aaye h utne review yaha show ker dega number me
-
-    // or yaha hm productId ko leke hm update ker degay 
+    const numOfReviews = reviews.length; 
+    
     await Product.findByIdAndUpdate(
         req.query.productId,
         {
@@ -196,11 +176,8 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
         }
     );
 
-    // or reponse me yaha mil jayega hame
     res.status(200).json({
         success: true,
     });
 });
-// or yaha hm ne delete review ka bhi bana leya h 
-// or hm deleteReview function ka route set ker degay productRoute me
 
