@@ -1,11 +1,6 @@
-// pahale hm banana start kerte h orderModels ko 
-const mongoose = require("mongoose"); // yaha hm ne mongoose ko require/import ker leya hai
+const mongoose = require("mongoose"); 
 
-// or hm sare chijo ko orderSchema varaible ke under new schema dal ke jo required chije h unko hm 
-// schema me store ker legay
 const orderSchema = new mongoose.Schema({
-  // shippingInfo mtlb ke jo product deliver kerne me jo information hame chaheye gye vaha hm is tareke
-  // se dalva legay user se
   shippingInfo: {
     address: {
       type: String,
@@ -34,7 +29,6 @@ const orderSchema = new mongoose.Schema({
       required: true,
     },
   },
-  // orderItems ke user kitne items book ker raha h unke quantity ko hm dalva legay
   orderItems: [
     {
       name: {
@@ -112,5 +106,3 @@ const orderSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Order", orderSchema);
-// or isko hm export kerte rahegay jaha jaha per jarurate padegye vaha
-// or aagay iske routes or function banate h 
