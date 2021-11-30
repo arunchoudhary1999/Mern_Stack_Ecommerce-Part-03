@@ -6,8 +6,8 @@ const {
   deleteProduct,
   getProductDetails,
   createProductReview,
-  getProductReviews, // yaha per import ker leya h 
-  deleteReview,  // yaha per import ker leya h
+  getProductReviews, 
+  deleteReview,  
   getAdminProducts,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
@@ -34,7 +34,6 @@ router.route("/product/:id").get(getProductDetails);
 router.route("/review").put(isAuthenticatedUser, createProductReview);
 
 router.route("/reviews").get(getProductReviews).delete(isAuthenticatedUser, deleteReview);
-// yaha per hm ne getProductReviews, or deleteReview funtion ka route set ker deya h or sat inko hm import bhi ker legay
 
 module.exports = router;
 
