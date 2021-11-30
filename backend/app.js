@@ -10,12 +10,10 @@ app.use(cookieParser());
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute");
 const order = require("./routes/orderRouter"); 
-// yaha per hm ne orderRouter ko import ker deya hai 
 
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
-// or yaha per order ko use ker legay
 
 // Middleware for Error
 app.use(errorMiddleware);
