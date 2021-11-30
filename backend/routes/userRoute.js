@@ -10,8 +10,8 @@ const {
   updateProfile,
   getAllUser,
   getSingleUser,
-  updateUserRole, // or yaha per hm ne updateUserRole ko import ker leya h
-  deleteUser // or yaha per hm ne deleteUser ko import ker leya h
+  updateUserRole,
+  deleteUser 
 } = require("../controllers/userController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
@@ -38,8 +38,6 @@ router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles("admin"), g
 
 router.route("/admin/user/:id")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getSingleUser)
-  // basically route to yaha hone wala h to esse me hm dono (ye dono -> updateUserRole, or deleteUser ) 
-  // method ko hm esse route me set kerdagay or sath dono ko hm import bhi ker degay
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateUserRole)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
 
